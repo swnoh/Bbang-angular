@@ -1,0 +1,68 @@
+<div class="container-fluid product-detail">
+  <div class="col-sm-12 col-md-8 col-xl-7">
+    <div id="productCarousel" class="carousel slide" data-ride="carousel">
+      <div class="carousel-inner">
+        <div class="item">
+          <img [src]="selectedItem.imagePath" [alt]="selectedItem.imagePath" />
+        </div>
+      </div>
+      <a class="carousel-control left" href="#productCarousel" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+      </a>
+      <a class="carousel-control right" href="#productCarousel" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right"></span>
+      </a>
+    </div>
+
+    <div class="product-description" [innerHTML]="selectedItem.description"></div>
+  </div>
+  <div class=" col-sm-12 col-md-4 col-xl-5">
+    <form class="form-product-detail" (click)="handleAddCart">
+      <div class="form-group row btn-product-option1">
+        <h1>{{selectedItem.title}}</h1>
+        <br />
+
+        <div class="btn-group btn-group-toggle row " data-toggle="buttons" (click)="handleSelectedOption">
+          <label class="btn btn-outline-info btn-lg product-detail-btn-menu option1" data-option1="title.split( ' : ')[0]" data-price="title.split(
+          ' : ')[1]" data-optionidx="index - 1" data-target="#productCarousel" data-slide-to="index - 1" *ngFor="let title of selectedItem.title">
+            <input [type]="item.price[0].indexOf( ' flavour ')> -1 ? 'checkbox ' : 'radio '" name="options" id="option1" autoComplete="off"
+            /> {{title.split(": ")[0]}}
+          </label>
+        </div>
+      </div>
+      <div class="form-group row" *ngIf="selectedItem.price[0] !== ''">
+        <!-- <div class="btn-group btn-group-toggle row" data-toggle="buttons" (click)="handleSelectedOption">
+        <label class="btn btn-outline-secondary btn-lg product-detail-btn-menu option2" data-option2="price.split( ': ')[0]" data-price="price.split(
+          ': ')[1]" *ngFor="let price of selectedItem.price">
+          <input type="radio" name="options" [id]=" 'product-option-' + index" autoComplete="off" /> {{price.split(":")[0]}}
+        </label>
+      </div> -->
+      </div>
+
+      <div class="form-group row">
+        <div class="product-detail-price">
+          <h2 *ngIf="isString(selectedOption1) ; else selectOptionType">
+            <!-- dsd {{selectedOption1.map( (option, index) => index === selectedOption1.length - 1 ? option : option + " | " )}} -->
+          </h2>
+          <ng-template #selectOptionType>
+            <h2>{{selectedOption1}}</h2>
+          </ng-template>
+          <div class="product-detail-selection">
+            <h2> {{selectedOption2}} </h2>
+            <h2 *ngIf="selectedPrice !== 0">Price: $ {{selectedPrice}}</h2>
+          </div>
+          <h3 *ngIf="!isChosen">Please select the proper option.</h3>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-lg btn-block " [ngClass]="selectedOption1 && selectedPrice ? 'showAddCartButton' : '' "
+        id="button-add-cart ">
+
+        <i class="fa fa-shopping-cart " *ngIf="selectedOption1 && selectedPrice ; else selectOption">
+          <span id="addCartText ">ADD TO CART</span>
+        </i>
+        <ng-template #selectOption>Please select an option.</ng-template>
+      </button>
+    </form>
+  </div>
+</div>
