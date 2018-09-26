@@ -132,9 +132,6 @@
 
 .btn-group {
   display: flex !important;
-  /* border: 1px solid rgba(128, 128, 128, 0.24); */
-  /* padding: 30px; */
-  /* border-radius: 20px; */
 }
 
 .inproper-selection {
@@ -151,11 +148,6 @@
   background-color: #1b1b1b;
   color: #e5dfd9;
 }
-
-/* .showAddCartButton:hover {
-    background-color: #464646 !important;
-    color: #e5dfd9;
-  } */
 
 #button-add-cart:hover {
   color: #e5dfd9;

@@ -1,0 +1,23 @@
+<div class="ModalBackground">
+  <div class="overlay" [ngClass]="isOpen? 'open':''">
+    <div class="overlay-header" [ngClass]="isOpen? 'open':''">
+      <a class="ml-5 pl-5" id="top-logo" href="">
+        ミルク Miruku
+      </a>
+      <button class="closebtn" (click)="closeModal()">
+        &times;
+      </button>
+    </div>
+
+    <div class="overlay-content" [ngClass]="isOpen? 'open':''">
+      <!-- <Checkout products={this.props.products} submitOrderForm={this.props.submitOrderForm} handleRemoveCart={this.props.handleRemoveCart}
+      /> -->
+      <app-modal-checkout></app-modal-checkout>
+    </div>
+    <div class="overlay-footer" [ngClass]="isOpen? 'open':''">
+      <a (click)="closeModal()">
+        <i class="fa fa-angle-double-up"></i>
+      </a>
+    </div>
+  </div>
+</div>

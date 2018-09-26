@@ -9,14 +9,14 @@
     </div>
     <div class="navbar-nav ml-auto" id="header-cart-items">
       <li>
-        <a id="header-cart">
+        <a id="header-cart" (click)="clickCart()">
           <i class="fa fa-shopping-cart"></i>
           <span class="cartName"> Cart </span>
-          <span class="badge">3</span>
+          <span class="badge">{{itemCount}}</span>
         </a>
       </li>
       <li>
-        <a id="header-checkout">
+        <a id="header-checkout" (click)="clickCheckout()">
           Checkout
         </a>
       </li>

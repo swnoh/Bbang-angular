@@ -93,8 +93,12 @@
 }
 
 .content-map {
+}
+
+agm-map {
   box-shadow: 1px 1px 5px 1px rgb(121, 121, 121);
   margin: 10px 0 70px 0;
+  height: 500px;
 }
 
 @media only screen and (max-device-width: 1366px) {
