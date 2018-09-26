@@ -49,6 +49,10 @@ export class ProductDetailsComponent implements OnInit {
     return typeof value !== "string";
   }
 
+  handleAddCart() {}
+
+  handleSelectedOption() {}
+
   // handleSelectedOption = event => {
   //   let selections = event.target.dataset;
   //   let checked = event.target.childNodes[0].checked;
