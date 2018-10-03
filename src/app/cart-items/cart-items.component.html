@@ -1,4 +1,4 @@
-<div class="shopping-cart-body" *ngIf="items.length > 0">
+<div class="shopping-cart-body" *ngIf="items">
   <ul *ngFor="let item of items">
     <li class="shopping-cart-items">
       <img [src]="item.imagePath" [alt]="item.selectedOption1" />

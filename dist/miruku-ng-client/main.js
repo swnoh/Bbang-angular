@@ -245,7 +245,7 @@ module.exports = ".shopping-cart-body {\n  height: 70vh;\n  overflow-y: auto;\n}
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"shopping-cart-body\" *ngIf=\"items.length > 0\">\n  <ul *ngFor=\"let item of items\">\n    <li class=\"shopping-cart-items\">\n      <img [src]=\"item.imagePath\" [alt]=\"item.selectedOption1\" />\n      <div class=\"shopping-cart-items-info\">\n        <div>\n          <strong>{{item.selectedOption1}}</strong>\n        </div>\n        <ul>\n          <li>{{item.selectedOption2}}</li>\n          <li>${{item.price}}</li>\n        </ul>\n      </div>\n      <a (click)=\"removeItem(item.selectedOption1)\">\n        <i class=\"fa fa-trash\"></i>\n      </a>\n    </li>\n  </ul>\n</div>\n"
+module.exports = "<div class=\"shopping-cart-body\" *ngIf=\"items\">\n  <ul *ngFor=\"let item of items\">\n    <li class=\"shopping-cart-items\">\n      <img [src]=\"item.imagePath\" [alt]=\"item.selectedOption1\" />\n      <div class=\"shopping-cart-items-info\">\n        <div>\n          <strong>{{item.selectedOption1}}</strong>\n        </div>\n        <ul>\n          <li>{{item.selectedOption2}}</li>\n          <li>${{item.price}}</li>\n        </ul>\n      </div>\n      <a (click)=\"removeItem(item.selectedOption1)\">\n        <i class=\"fa fa-trash\"></i>\n      </a>\n    </li>\n  </ul>\n</div>\n"
 
 /***/ }),
 
