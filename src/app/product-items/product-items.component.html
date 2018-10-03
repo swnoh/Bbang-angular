@@ -10,9 +10,9 @@
     <div class="col-lg-4 col-md-6 col-sm-12 text-center" *ngFor="let item of items">
       <div class="thumbnail">
         <a routerLink="/product/{{item.id}}" (click)="onSelect(item)">
-          <img [src]=" item.imagePath.split( ',')[0] " [alt]="item.title.split( ',')[0] " />
+          <img [src]="item.imagePath[0]" [alt]="item.title[0]" />
           <div class="img-thumb-overlay ">
-            <h2>{{item.title.split(',')[0]}}</h2>
+            <h2>{{item.title[0]}}</h2>
             <p>
               <a class="img-thumb-text ">Find Out</a>
             </p>
@@ -20,7 +20,7 @@
         </a>
         <router-outlet></router-outlet>
         <div class="caption ">
-          <p>{{item.title.split(',')[0]}}</p>
+          <p>{{item.title[0]}}</p>
         </div>
       </div>
     </div>

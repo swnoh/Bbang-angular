@@ -1,9 +1,26 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { Location } from "@angular/common";
+import { NgForm } from "@angular/forms";
+
+import { Apollo } from "apollo-angular";
+import gql from "graphql-tag";
 
 import { Product } from "../product";
-import { ProductService } from "../product.service";
+import { ProductCartService } from "../product-cart.service";
+import { ToggleService } from "../toggle.service";
+
+const productsListQuery = gql`
+  query ProductListQuery {
+    products {
+      id
+      imagePath
+      title
+      description
+      price
+    }
+  }
+`;
 
 @Component({
   selector: "app-product-details",
@@ -13,19 +30,23 @@ import { ProductService } from "../product.service";
 export class ProductDetailsComponent implements OnInit {
   selectedItem: Product;
 
-  selectedOption1: object;
+  selectedOption1: any;
   selectedOption2: string;
   selectedPrice: number;
   optionidx: number;
   inputType: string;
   isChosen: boolean;
+  setItem: object;
+  loading: boolean;
 
   constructor(
     private route: ActivatedRoute,
     private location: Location,
-    private productService: ProductService
+    private ProductCartService: ProductCartService,
+    private ToggleService: ToggleService,
+    private apollo: Apollo
   ) {
-    this.selectedOption1 = null;
+    this.selectedOption1 = [];
     this.selectedOption2 = "";
     this.selectedPrice = 0;
     this.optionidx = 0;
@@ -34,59 +55,45 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getSelectedProduct();
+    this.apollo
+      .watchQuery<any>({ query: productsListQuery })
+      .valueChanges.subscribe(({ data, loading }) => {
+        this.selectedItem = data.products.filter(
+          item => item.id === this.route.snapshot.paramMap.get("id")
+        )[0];
+      });
   }
 
-  getSelectedProduct(): void {
-    this.productService.getProducts().subscribe(data => {
-      this.selectedItem = data.filter(
-        item => item.id === this.route.snapshot.paramMap.get("id")
-      )[0];
-    });
+  handleAddCart() {
+    this.setItem = {
+      imagePath: this.selectedItem.imagePath,
+      selectedOption1: this.selectedOption1,
+      selectedOption2: this.selectedOption2,
+      price: this.selectedPrice
+    };
+    if (this.selectedOption1.length > 0 && this.selectedPrice) {
+      this.ProductCartService.setProductCarts(this.setItem);
+      this.ToggleService.cartToggle();
+    } else {
+      this.isChosen = false;
+    }
   }
 
-  isString(value) {
-    return typeof value !== "string";
+  handleSelectedOption1(option: String, price: number, isCheckbox: boolean) {
+    if (this.selectedOption1.indexOf(option) > -1) {
+      this.selectedOption1 = this.selectedOption1.filter(opt => opt !== option);
+    } else {
+      isCheckbox
+        ? (this.selectedOption1 = [...this.selectedOption1, option])
+        : (this.selectedOption1 = option);
+    }
+    if (price) this.selectedPrice = price;
+    this.isChosen = true;
   }
 
-  handleAddCart() {}
-
-  handleSelectedOption() {}
-
-  // handleSelectedOption = event => {
-  //   let selections = event.target.dataset;
-  //   let checked = event.target.childNodes[0].checked;
-  //   let inputType = event.target.childNodes[0].type;
-  //   this.setState(prevState => {
-  //     return {
-  //       selectedOption1:
-  //         selections.option1 !== undefined
-  //           ? checked
-  //             ? inputType === "radio"
-  //               ? selections.option1
-  //               : [...this.state.selectedOption1, selections.option1]
-  //             : this.state.selectedOption1.filter(
-  //                 selectedOption1 => selectedOption1 !== selections.option1
-  //               )
-  //           : prevState.selectedOption1,
-  //       selectedOption2:
-  //         selections.option2 !== undefined
-  //           ? selections.option2
-  //           : prevState.selectedOption2,
-  //       selectedPrice:
-  //         selections.price !== undefined
-  //           ? selections.price
-  //           : prevState.selectedPrice,
-  //       optionidx:
-  //         selections.optionidx !== undefined
-  //           ? parseInt(selections.optionidx, 10)
-  //           : prevState.optionidx,
-  //       inputType:
-  //         inputType !== undefined && selections.option1 !== undefined
-  //           ? inputType
-  //           : prevState.inputType,
-  //       isChosen: true
-  //     };
-  //   });
-  // };
+  handleSelectedOption2(option: string, price: number) {
+    this.selectedOption2 = option;
+    this.selectedPrice = price;
+    this.isChosen = true;
+  }
 }

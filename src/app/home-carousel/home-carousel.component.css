@@ -116,8 +116,13 @@ h4 {
   text-decoration: none;
 }
 
+.home-social a:first-child {
+  padding-right: 10px;
+}
+
 .home-social a {
   color: rgb(177, 177, 177);
+  font-size: 2em;
 }
 
 .home-social a:hover {

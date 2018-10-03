@@ -1,3 +1,9 @@
+h1 {
+  text-transform: uppercase;
+  color: #dfdfdf;
+  font-size: 1.6em;
+  letter-spacing: 4px;
+}
 .container-fluid.checkout {
   font-family: "Rajdhani", sans-serif !important;
   letter-spacing: 2px;
@@ -50,6 +56,10 @@
 
 #order-shopping-cart .shopping-cart-empty {
   text-align: center;
+}
+
+#order-shopping-cart .shopping-cart-empty {
+  padding: 70px 30px 70px 30px;
 }
 
 #order-shopping-cart .order-shopping-cart-total {

@@ -7,21 +7,20 @@
     </a>
     <h2>Shopping Cart</h2>
   </div>
-  <div class="shopping-cart-content">
-    <app-cart-items></app-cart-items>
-    <!-- <CartList products={products} handleRemoveCart={handleRemoveCart} />
-      <div class="shopping-cart-footer">
-        <CartTotal products={products} />
-        <button
-          class="btn btn-danger btn-block button-checkout"
-          onClick={this.handleCheckout}
-        >
-          Checkout
-        </button>
-      </div> -->
-  </div>
-
   <div class="shopping-cart-empty" *ngIf="itemCount == 0">
     <h1>Cart is empty</h1>
   </div>
+  <div class="shopping-cart-content">
+    <app-cart-items></app-cart-items>
+    <div class="shopping-cart-footer" *ngIf="itemCount > 0">
+      <div class="shopping-cart-total">
+        <span class="lighter-text">Total: </span>
+        <span class="main-color-text">$ {{itemTotalPrice}}</span>
+      </div>
+      <button class="btn btn-danger btn-block button-checkout" (click)="openCheckout()">
+        Checkout
+      </button>
+    </div>
+  </div>
+
 </div>

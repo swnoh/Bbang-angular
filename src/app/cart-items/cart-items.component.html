@@ -1,4 +1,4 @@
-<div class="shopping-cart-body">
+<div class="shopping-cart-body" *ngIf="items.length > 0">
   <ul *ngFor="let item of items">
     <li class="shopping-cart-items">
       <img [src]="item.imagePath" [alt]="item.selectedOption1" />
@@ -11,7 +11,7 @@
           <li>${{item.price}}</li>
         </ul>
       </div>
-      <a>
+      <a (click)="removeItem(item.selectedOption1)">
         <i class="fa fa-trash"></i>
       </a>
     </li>

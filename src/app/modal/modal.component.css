@@ -24,7 +24,6 @@
 }
 
 .ModalBackground .overlay .closebtn {
-  /* padding: 20px; */
   text-decoration: none;
   font-size: 35px;
   color: #9b9b9b;
@@ -35,7 +34,7 @@
   border: none;
   top: 20px;
   right: 11%;
-  /* height: 60px; */
+  cursor: pointer;
 }
 
 #top-logo {

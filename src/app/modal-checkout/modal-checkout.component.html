@@ -4,9 +4,13 @@
       <div class="box-title">
         <h1>Shopping Bag</h1>
       </div>
-      <!-- <div class="shopping-cart-empty">
+      <div class="order-shopping-cart-total">
+        <span class="lighter-text">Total: </span>
+        <span class="main-color-text">$ {{itemTotalPrice}}</span>
+      </div>
+      <div class="shopping-cart-empty" *ngIf="itemCount == 0">
         <h1>Cart is empty</h1>
-      </div> -->
+      </div>
       <app-cart-items></app-cart-items>
     </div>
 
@@ -16,7 +20,7 @@
       </div>
 
       <div class="form">
-        <form>
+        <form #orderForm="ngForm">
           <div class="form-group row">
             <label htmlFor="email-input" class="col-2 col-form-label">
               Email

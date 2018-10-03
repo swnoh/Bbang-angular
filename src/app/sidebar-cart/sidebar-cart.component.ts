@@ -1,7 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { ToggleService } from "../toggle.service";
 import { ProductCartService } from "../product-cart.service";
-import { Product } from "../product";
 
 @Component({
   selector: "app-sidebar-cart",
@@ -10,7 +9,8 @@ import { Product } from "../product";
 })
 export class SidebarCartComponent implements OnInit {
   isCartOpen = false;
-  items: object;
+  itemCount: number = 0;
+  itemTotalPrice: number;
 
   constructor(
     private ToggleService: ToggleService,
@@ -18,15 +18,21 @@ export class SidebarCartComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.ProductCartService.cartChange.subscribe(() => {
+      this.itemCount = this.ProductCartService.getProductCartCount();
+      this.itemTotalPrice = this.ProductCartService.getProductCartTotal();
+    });
     this.ToggleService.cartChange.subscribe(isCartOpen => {
       this.isCartOpen = isCartOpen;
     });
-    this.items = this.ProductCartService.getProductCarts();
   }
 
   closeSidebar() {
     this.ToggleService.cartToggle();
   }
 
-  itemCount = this.ProductCartService.getProductCartCount();
+  openCheckout() {
+    this.ToggleService.checkoutToggle();
+    this.closeSidebar();
+  }
 }

@@ -8,13 +8,18 @@ import { ProductCartService } from "../product-cart.service";
   styleUrls: ["./header.component.css"]
 })
 export class HeaderComponent implements OnInit {
-  isOpen = false;
+  isOpen: boolean = false;
+  itemCount: number = 0;
   constructor(
     private ToggleService: ToggleService,
     private ProductCartService: ProductCartService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.ProductCartService.cartChange.subscribe(isCartOpen => {
+      this.itemCount = this.ProductCartService.getProductCartCount();
+    });
+  }
 
   clickCheckout() {
     this.ToggleService.checkoutToggle();
@@ -23,6 +28,4 @@ export class HeaderComponent implements OnInit {
   clickCart() {
     this.ToggleService.cartToggle();
   }
-
-  itemCount = this.ProductCartService.getProductCartCount();
 }

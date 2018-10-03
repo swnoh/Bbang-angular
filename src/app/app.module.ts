@@ -18,8 +18,8 @@ import { ModalCheckoutComponent } from "./modal-checkout/modal-checkout.componen
 import { AppRoutingModule } from "./app-routing.module";
 import { HomeComponent } from "./home/home.component";
 import { ModalComponent } from "./modal/modal.component";
-import { SafeHtmlPipe } from "./safe-html.pipe";
-import { CartItemsComponent } from './cart-items/cart-items.component';
+import { CartItemsComponent } from "./cart-items/cart-items.component";
+import { GraphQLModule } from './graphql.module';
 
 @NgModule({
   declarations: [
@@ -34,7 +34,6 @@ import { CartItemsComponent } from './cart-items/cart-items.component';
     ModalCheckoutComponent,
     HomeComponent,
     ModalComponent,
-    SafeHtmlPipe,
     CartItemsComponent
   ],
   imports: [
@@ -45,7 +44,8 @@ import { CartItemsComponent } from './cart-items/cart-items.component';
     AgmCoreModule.forRoot({
       apiKey: "AIzaSyAQJr92VOhg0iXSvziHhxHiG4PYuuoU5Jg"
     }),
-    ScrollToModule.forRoot()
+    ScrollToModule.forRoot(),
+    GraphQLModule
   ],
   providers: [ToggleService],
   bootstrap: [AppComponent]

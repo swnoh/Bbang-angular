@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 
-import { Product } from "../product";
 import { ProductCartService } from "../product-cart.service";
+import { ToggleService } from "../toggle.service";
 
 @Component({
   selector: "app-cart-items",
@@ -9,11 +9,20 @@ import { ProductCartService } from "../product-cart.service";
   styleUrls: ["./cart-items.component.css"]
 })
 export class CartItemsComponent implements OnInit {
-  items: object;
+  items: object = [];
 
-  constructor(private ProductCartService: ProductCartService) {}
+  constructor(
+    private ProductCartService: ProductCartService,
+    private ToggleService: ToggleService
+  ) {}
 
   ngOnInit() {
-    this.items = this.ProductCartService.getProductCarts();
+    this.ProductCartService.cartChange.subscribe(() => {
+      this.items = this.ProductCartService.getProductCarts();
+    });
+  }
+
+  removeItem(selectedItem) {
+    this.ProductCartService.removeProductCart(selectedItem);
   }
 }

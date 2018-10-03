@@ -1,34 +1,17 @@
-import { Injectable } from "@angular/core";
+import { Injectable, Output, EventEmitter } from "@angular/core";
 
 @Injectable({
   providedIn: "root"
 })
 export class ProductCartService {
   items = [];
+  cartStatus: boolean = false;
+
+  @Output()
+  cartChange: EventEmitter<boolean> = new EventEmitter();
 
   constructor() {
-    this.items = [
-      {
-        imagePath:
-          "https://mirukuottawacom.files.wordpress.com/2018/03/25014119_156217788476333_751495092115603456_n-e1522254417236.jpg?w=300&h=280",
-        selectedOption1: "Royal milk tea bottle",
-        selectedOption2: "1 bottle (350ml)",
-        price: "6.5"
-      },
-      {
-        imagePath:
-          "https://mirukuottawacom.files.wordpress.com/2018/03/28751760_192098984728624_3488322547471089664_n.jpg?w=476&h=476&crop=1",
-        selectedOption1: "Matcha red bean bento",
-        selectedOption2: "2 Bento (30oz)",
-        price: "20"
-      },
-      {
-        imagePath:
-          "https://mirukuottawacom.files.wordpress.com/2018/04/img_7186.jpg?w=476&h=476&crop=1",
-        selectedOption1: "Strawberry shortcake",
-        price: "40"
-      }
-    ];
+    this.items = [];
   }
 
   getProductCarts() {
@@ -37,9 +20,24 @@ export class ProductCartService {
 
   setProductCarts(item): void {
     this.items.push(item);
+    this.cartChange.emit(!this.cartStatus);
   }
 
-  getProductCartCount() {
+  getProductCartCount(): number {
     return this.items.length;
+  }
+
+  getProductCartTotal(): number {
+    return this.items
+      .map(product => {
+        let priceArr = 0;
+        return (priceArr += +product.price);
+      })
+      .reduce((a, b) => a + b, 0);
+  }
+
+  removeProductCart(selectItem): void {
+    this.items = this.items.filter(item => item.selectedOption1 !== selectItem);
+    this.cartChange.emit(!this.cartStatus);
   }
 }

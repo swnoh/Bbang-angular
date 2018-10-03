@@ -1,7 +1,21 @@
 import { Component, OnInit } from "@angular/core";
 
 import { Product } from "../product";
-import { ProductService } from "../product.service";
+
+import { Apollo } from "apollo-angular";
+import gql from "graphql-tag";
+
+const productsListQuery = gql`
+  query ProductListQuery {
+    products {
+      id
+      imagePath
+      title
+      description
+      price
+    }
+  }
+`;
 
 @Component({
   selector: "app-product-items",
@@ -11,20 +25,20 @@ import { ProductService } from "../product.service";
 export class ProductItemsComponent implements OnInit {
   items: Product[];
   selectedId: string;
+  loading: boolean;
 
-  constructor(private productService: ProductService) {
+  constructor(private apollo: Apollo) {
     this.items = [];
     this.selectedId = "";
   }
 
-  ngOnInit(): void {
-    this.getProducts();
-  }
-
-  getProducts(): void {
-    this.productService.getProducts().subscribe(data => {
-      this.items = data;
-    });
+  ngOnInit() {
+    this.apollo
+      .watchQuery<any>({ query: productsListQuery })
+      .valueChanges.subscribe(({ data, loading }) => {
+        this.loading = loading;
+        this.items = data.products;
+      });
   }
 
   onSelect(item): void {
